@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION['login'])) {
+    //login ok!
+} else {
+    header('location: ./login.php');
+} ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -57,27 +64,12 @@
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
 
                 <div class="container-fluid">
-                    <div class="collapse" id="search-nav">
-                        <form class="navbar-left navbar-form nav-search mr-md-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="submit" class="btn btn-search pr-1">
-                                        <i class="fa fa-search search-icon"></i>
-                                    </button>
-                                </div>
-                                <input type="text" placeholder="Search ..." class="form-control">
-                            </div>
-                        </form>
-                    </div>
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item toggle-nav-search hidden-caret">
                             <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
                                 <i class="fa fa-search"></i>
                             </a>
                         </li>
-
-
-
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
@@ -90,8 +82,8 @@
                                         <div class="user-box">
                                             <div class="avatar-lg"><img src="img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Ver Profile</a>
+                                                <h4><?php echo $_SESSION['nomeFuncionario']; ?></h4>
+                                                <p class="text-muted"><?php echo $_SESSION['email']; ?></p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Ver Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -100,7 +92,7 @@
                                         <a class="dropdown-item" href="#">Meu Perfil</a>
                                         <a class="dropdown-item" href="#">Alterar senha</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Logout</a>
+                                        <a class="dropdown-item" href="./logout.php">Logout</a>
                                     </li>
                                 </div>
                             </ul>
@@ -122,8 +114,8 @@
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
+                                    <?php echo $_SESSION['nomeFuncionario']; ?>
+                                    <span class="user-level"><?php echo $_SESSION['descricao']; ?></span>
                                     <span class="caret"></span>
                                 </span>
                             </a>
@@ -147,34 +139,131 @@
                     </div>
                     <ul class="nav nav-primary">
                         <li class="nav-item active">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <i class="fas fa-home"></i>
                                 <p>Menu Principal</p>
                             </a>
                         </li>
 
-                        <li class="nav-section">
+                        <?php
+                        if ($_SESSION['idCargo'] == 1) {
+                            echo '<li class="nav-section">
                             <span class="sidebar-mini-icon">
                                 <i class="fa fa-ellipsis-h"></i>
                             </span>
                             <h4 class="text-section">Components</h4>
                         </li>
                         <li class="nav-item">
-                            <a data-toggle="collapse" href="#base">
-                                <i class="fas fa-layer-group"></i>
-                                <p>Base</p>
+                            <a data-toggle="collapse" href="#funcionarios">
+                                <i class="fas fa-user-md"></i>
+                                <p>Funcionários</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="base">
+                            <div class="collapse" id="funcionarios">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="components/avatars.html">
-                                            <span class="sub-item">Avatars</span>
+                                        <a href="cadastrar_funcionario.php">
+                                            <span class="sub-item">Cadastrar</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="consultar_funcionario.php">
+                                            <span class="sub-item">Consultar</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a data-toggle="collapse" href="#cargos">
+                                <i class="fas fa-plus-square"></i>
+                                <p>Cargos</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="cargos">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="cadastrar_cargo.php">
+                                            <span class="sub-item">Cadastrar</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="consultar_cargo.php">
+                                            <span class="sub-item">Consultar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>';
+                        } ?>
+
+
+                        <?php
+                        if ($_SESSION['idCargo'] == 2 || $_SESSION['idCargo'] == 3) {
+                            echo '<li class="nav-item">
+                            <a data-toggle="collapse" href="#pacientes">
+                                <i class="fas fa-users"></i>
+                                <p>Pacientes</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="pacientes">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="cadastrar_paciente.php">
+                                            <span class="sub-item">Cadastrar</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="consultar_paciente.php">
+                                            <span class="sub-item">Consultar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="collapse" href="#consultas">
+                                <i class="fas fa-users"></i>
+                                <p>Consultas</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="consultas">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="agendar_consulta.php">
+                                            <span class="sub-item">Agendar</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="listar_consulta.php">
+                                            <span class="sub-item">Listar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>';
+                        } ?>
+
+                        <?php
+                        if ($_SESSION['idCargo'] == 3) {
+                            echo
+                                '<li class="nav-item">
+                            <a data-toggle="collapse" href="#prontuario">
+                                <i class="fas fa-users"></i>
+                                <p>Prontuário</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="prontuario">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="prontuario.php">
+                                            <span class="sub-item">Procurar</span>
+                                        </a>
+                                    </li>                          
+                                </ul>
+                            </div>
+                        </li>';
+                        } ?>
 
 
 
