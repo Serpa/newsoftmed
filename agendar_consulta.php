@@ -41,13 +41,10 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
             selectable: true,
-            selectAllow: function(info) {
-                if (info.start.isBefore(moment()))
-                    return false;
-                return true;
-            },
+            allDayDefault: false,
+            forceEventDuration: true,
+            defaultTimedEventDuration: '00:30:00',
             defaultView: 'resourceTimeGridDay',
-            locale: 'pt-br',
             timeZone: 'America/Sao_Paulo',
             header: {
                 left: 'prev,next today',
@@ -64,10 +61,9 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                     buttonText: '2 dias',
                 }
             },
-            dateClick: function(info) {
-                //alert('clicked ' + info.dateStr + ' on resource ' + info.resource.id);
-                $('#cadastrar #start').val(info.dateStr);
-                $('#cadastrar #end').val(info.dateStr + '00:30:00');
+            select: function(info) {
+                $('#cadastrar #start').val(info.startStr);
+                $('#cadastrar #end').val(info.endStr);
                 $('#cadastrar #med').val(info.resource.title);
                 $('#cadastrar #medId').val(info.resource.id);
                 $('#cadastrar').modal('show');
@@ -83,74 +79,16 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             },
             slotLabelInterval: '00:30:00',
             nowIndicator: true,
-            events: [
-                <?php
-                while ($row_events = mysqli_fetch_array($resultado_events)) {
-                    ?> {
-                        resourceId: '<?php echo $row_events['idMedico']; ?>',
-                        id: '<?php echo $row_events['idConsulta']; ?>',
-                        color: '<?php echo $row_events['tipoConsulta']; ?>',
-                        title: '<?php echo $row_events['nomePaciente']; ?>',
-                        start: '<?php echo $row_events['start']; ?>',
-                        end: '<?php echo $row_events['end']; ?>'
-                    },
-                <?php
-                }
-                ?>
-            ],
-
+            events: 'listar_consultas.php',
             //// uncomment this line to hide the all-day slot
-            //allDaySlot: false,
+            allDaySlot: false,
 
-            resources: [
-                <?php
-                while ($row_medicos = mysqli_fetch_array($resultado_medicos)) {
-                    ?> {
-                        id: '<?php echo $row_medicos['idFuncionario']; ?>',
-                        title: '<?php echo $row_medicos['nomeFuncionario']; ?>'
-                    },
-                <?php
-                }
-                ?>
-            ],
+            resources: 'listar_medicos.php',
         });
 
         calendar.render();
         calendar.setOption('locale', 'pt-br');
     });
-
-    //Mascara para o campo data e hora
-    /*    function DataHora(evento, objeto) {
-            var keypress = (window.event) ? event.keyCode : evento.which;
-            campo = eval(objeto);
-            if (campo.value == '00/00/0000 00:00:00') {
-                campo.value = ""
-            }
-
-            caracteres = '0123456789';
-            separacao1 = '/';
-            separacao2 = ' ';
-            separacao3 = ':';
-            conjunto1 = 2;
-            conjunto2 = 5;
-            conjunto3 = 10;
-            conjunto4 = 13;
-            conjunto5 = 16;
-            if ((caracteres.search(String.fromCharCode(keypress)) != -1) && campo.value.length < (19)) {
-                if (campo.value.length == conjunto1)
-                    campo.value = campo.value + separacao1;
-                else if (campo.value.length == conjunto2)
-                    campo.value = campo.value + separacao1;
-                else if (campo.value.length == conjunto3)
-                    campo.value = campo.value + separacao2;
-                else if (campo.value.length == conjunto4)
-                    campo.value = campo.value + separacao3;
-                else if (campo.value.length == conjunto5)
-                    campo.value = campo.value + separacao3;
-            } else {
-                event.returnValue = false;
-            }
-        }*/
 </script>
 
 <div class="main-panel">
@@ -174,7 +112,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
     <div class="modal fade" id="cadastrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">                    
+                <div class="modal-header">
                     <h4 class="modal-title text-center">Agendar Consulta</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
