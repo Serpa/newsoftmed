@@ -157,9 +157,10 @@ function DataHora(evento, objeto) {
                     <div class="card">
                         <div class="card-header">
                             <!-- Start Content -->
-                            <div class="card-title">Consultas do Dia</div>
+                            <div class="card-title"><?php if($_SESSION['idCargo']  == 3){
+                        echo 'Consultas do Dia';}?></div>
 						</div>
-						<?php if($_SESSION['idCargo']  = 3){
+						<?php if($_SESSION['idCargo']  == 3){
                         echo '<div id="calendar" class="has-toolbar"></div>';}?>
                         <!-- End Content -->
                     </div>
