@@ -13,7 +13,7 @@ if ($_SESSION['idCargo']  != 1) {
           <div class="card">
             <div class="card-header">
               <!-- Start Content -->
-              <div class="card-title">TESTE</div>
+              <div class="card-title">Cadastro de Funcionário</div>
             </div>
             <form class="form-horizontal style-form" action="envio_funcionarios.php" method="post">
               <div class="form-group">
@@ -149,5 +149,5 @@ if ($_SESSION['idCargo']  != 1) {
 <script src="js/mascaras.js"></script>
 
 <?php
-include_once "Footer.php";
+include_once "footer.php";
 ?>

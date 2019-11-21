@@ -83,13 +83,13 @@ if (isset($_SESSION['login'])) {
                                             <div class="avatar-lg"><img src="img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $_SESSION['nomeFuncionario']; ?></h4>
-                                                <p class="text-muted"><?php echo $_SESSION['email']; ?></p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Ver Profile</a>
+                                                <p class="text-muted"><?php echo $_SESSION['email']; ?></p><a href="./profile.php" class="btn btn-xs btn-secondary btn-sm">Ver Profile</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Meu Perfil</a>
+                                        <a class="dropdown-item" href="./profile.php">Meu Perfil</a>
                                         <a class="dropdown-item" href="#">Alterar senha</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="./logout.php">Logout</a>
