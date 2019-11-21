@@ -38,12 +38,10 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
             selectable: true,
-            locale: 'pt-br',
             allDayDefault: false,
             forceEventDuration: true,
             defaultTimedEventDuration: '00:30:00',
             defaultView: 'resourceTimeGridDay',
-            timeZone: 'America/Sao_Paulo',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -65,7 +63,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             };
         },
             select: function(info) {
-                $('#cadastrar #start').val(info.startSTR);
+                $('#cadastrar #start').val(info.start.toLocaleString());
                 $('#cadastrar #end').val(info.end.toLocaleString());
                 $('#cadastrar #med').val(info.resource.title);
                 $('#cadastrar #medId').val(info.resource.id);
@@ -114,6 +112,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         });
 
         calendar.render();
+        calendar.setOption('locale', 'pt-br');
     });
 
 //Mascara para o campo data e hora
