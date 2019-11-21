@@ -90,7 +90,7 @@ if (isset($_SESSION['login'])) {
                                     <li>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="./profile.php">Meu Perfil</a>
-                                        <a class="dropdown-item" href="#">Alterar senha</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#alterar_senha">Alterar senha</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="./logout.php">Logout</a>
                                     </li>
@@ -274,3 +274,50 @@ if (isset($_SESSION['login'])) {
             </div>
         </div>
         <!-- End Sidebar -->
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="alterar_senha" role="dialog" tabindex="-1" id="alterar_senha" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Alteração de senha.</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form action="./alterar_senha.php" method="post">
+                        <div class="modal-body">
+                            <p>Digite sua senha atual</p>
+                            <input type="password" name="senha_atual" autocomplete="off" class="form-control placeholder-no-fix" required>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>Digite sua nova senha</p>
+                            <input type="password" name="nova_senha" id="nova_senha" autocomplete="off" class="form-control placeholder-no-fix" required>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>Confirme sua nova senha</p>
+                            <input type="password" name="confirma_senha" id="confirma_senha" autocomplete="off" class="form-control placeholder-no-fix" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                            <button class="btn btn-theme" type="submit" type="button">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+        <script>
+            var password = document.getElementById("nova_senha"),
+                confirm_password = document.getElementById("confirma_senha");
+
+            function validatePassword() {
+                if (password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("A nova senha e a confirmação estão diferentes!");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>

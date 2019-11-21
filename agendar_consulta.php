@@ -41,6 +41,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
             selectable: true,
+            locale: 'pt-br',
             allDayDefault: false,
             forceEventDuration: true,
             defaultTimedEventDuration: '00:30:00',
@@ -61,9 +62,14 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                     buttonText: '2 dias',
                 }
             },
+            extraParams: function () {
+            return {
+                cachebuster: new Date().valueOf()
+            };
+        },
             select: function(info) {
-                $('#cadastrar #start').val(info.startStr);
-                $('#cadastrar #end').val(info.endStr);
+                $('#cadastrar #start').val(info.startSTR);
+                $('#cadastrar #end').val(info.end.toLocaleString());
                 $('#cadastrar #med').val(info.resource.title);
                 $('#cadastrar #medId').val(info.resource.id);
                 $('#cadastrar').modal('show');
@@ -87,8 +93,40 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         });
 
         calendar.render();
-        calendar.setOption('locale', 'pt-br');
     });
+
+//Mascara para o campo data e hora
+function DataHora(evento, objeto) {
+    var keypress = (window.event) ? event.keyCode : evento.which;
+    campo = eval(objeto);
+    if (campo.value == '00/00/0000 00:00:00') {
+        campo.value = "";
+    }
+
+    caracteres = '0123456789';
+    separacao1 = '/';
+    separacao2 = ' ';
+    separacao3 = ':';
+    conjunto1 = 2;
+    conjunto2 = 5;
+    conjunto3 = 10;
+    conjunto4 = 13;
+    conjunto5 = 16;
+    if ((caracteres.search(String.fromCharCode(keypress)) != -1) && campo.value.length < (19)) {
+        if (campo.value.length == conjunto1)
+            campo.value = campo.value + separacao1;
+        else if (campo.value.length == conjunto2)
+            campo.value = campo.value + separacao1;
+        else if (campo.value.length == conjunto3)
+            campo.value = campo.value + separacao2;
+        else if (campo.value.length == conjunto4)
+            campo.value = campo.value + separacao3;
+        else if (campo.value.length == conjunto5)
+            campo.value = campo.value + separacao3;
+    } else {
+        event.returnValue = false;
+    }
+}
 </script>
 
 <div class="main-panel">
@@ -117,7 +155,8 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" method="POST" action="proc_cad_evento.php">
+                <span id="msg-cad"></span>
+                    <form class="form-horizontal" form id="addconsulta" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Dr(a).</label>
@@ -136,7 +175,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                                     <?php
                                     $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
                                     while ($row_cargos = mysqli_fetch_assoc($resultado_cargos)) { ?>
-                                        <option value="<?php echo utf8_encode($row_cargos['idPaciente']); ?>"><?php echo $row_cargos['nomePaciente']; ?></option>
+                                        <option value="<?php echo $row_cargos['idPaciente']; ?>"><?php echo $row_cargos['nomePaciente']; ?></option>
                                     <?php } ?> } ?>
                                 </select>
                             </div>
@@ -156,18 +195,18 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Inicial</label>
                             <div class="col-sm-10">
-                                <input type="datetime-local" class="form-control" name="start" id="start">
+                                <input type="text" class="form-control" name="start" id="start" onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Final</label>
                             <div class="col-sm-10">
-                                <input type="datetime-local" class="form-control" name="end" id="end" onKeyPress="DataHora(event, this)">
+                                <input type="text" class="form-control" name="end" id="end" onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                                <button type="submit" name="addconsulta" id="addconsulta" value="addconsulta" class="btn btn-success">Cadastrar</button>
                             </div>
                         </div>
                     </form>
@@ -184,6 +223,28 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         placeholder: "Selecione um Paciente",
         allowClear: true,
         theme: "bootstrap"
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#addconsulta").on("submit", function(event) {
+            event.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "proc_agendamento.php",
+                data: new FormData(this),
+                contentType: false,
+                processData: false,
+                success: function(retorna) {
+                    if (retorna['sit']) {
+                        $("#msg-cad").html(retorna['msg']);
+                        location.reload();
+                    } else {
+                        $("#msg-cad").html(retorna['msg']);
+                    }
+                }
+            })
+        });
     });
 </script>
 <?php
