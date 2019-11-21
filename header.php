@@ -44,7 +44,7 @@ if (isset($_SESSION['login'])) {
             <div class="logo-header" data-background-color="dark2">
 
                 <a href="index.php" class="logo">
-                    <img src="img/logo.svg" alt="navbar brand" class="navbar-brand">
+                    <img src="img/icon.svg" alt="navbar brand" class="navbar-brand"><font color="white"> <strong>SoftMED</strong></font>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
