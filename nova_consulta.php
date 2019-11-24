@@ -27,15 +27,10 @@ $idPaciente = $_GET['pac'];
                                     <form name="consulta" action="salvar_consulta.php" method="post">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Nome do Paciente</label>
-                                            <select name="pac" id="pac" class="form-control" style="width: 100%">
-                                                <option></option>
-                                                <?php
-                                                $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
-                                                while ($row_cargos = mysqli_fetch_assoc($resultado_cargos)) { ?>
-                                                    <option value="<?php echo $row_cargos['idPaciente']; ?>"><?php echo $row_cargos['nomePaciente']; ?></option>
-                                                <?php } ?> } ?>
-                                            </select>
+                                            <input type='text' disabled class="form-control" name="data" value=' <?php
+                                                $resultado_cargos = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM paciente WHERE idPaciente  = $idPaciente"));echo $resultado_cargos['nomePaciente']; ?>'>
                                         </div>
+                                        <input readonly type='hidden' class="form-control" name="pac" value='<?php echo $resultado_cargos['idPaciente']; ?>'>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Data da Consulta</label>
                                             <input type='date' class="form-control" name="data" value='<?php echo date("Y-m-d"); ?>'>
