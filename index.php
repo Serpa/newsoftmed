@@ -69,6 +69,12 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                 $('#cadastrar #medId').val(info.resource.id);
                 $('#cadastrar').modal('show');
             },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault(); // don't let the browser navigate
+                console.log(info);
+                    window.open("./nova_consulta.php?id="+info.event.id+"&pac="+info.event.extendedProps.idPaciente);
+                    return false;
+            },
             minTime: '08:00:00',
             maxTime: '18:00:00',
             slotDuration: '00:30:00',
@@ -86,6 +92,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                     ?> {
                         resourceId: '<?php echo $row_events['idMedico']; ?>',
                         id: '<?php echo $row_events['idConsulta']; ?>',
+                        idPaciente: '<?php echo $row_events['idPaciente']; ?>',
 						color: '<?php echo $row_events['tipoConsulta']; ?>',
                         title: '<?php echo $row_events['nomePaciente']; ?>',
                         start: '<?php echo $row_events['start']; ?>',
