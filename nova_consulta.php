@@ -24,10 +24,10 @@ $idPaciente = $_GET['pac'];
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <form name="consulta">
+                                    <form name="consulta" action="salvar_consulta.php" method="post">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Nome do Paciente</label>
-                                            <select name="pac" id="pac" class="form-control" style="width: 100%" disabled>
+                                            <select name="pac" id="pac" class="form-control" style="width: 100%">
                                                 <option></option>
                                                 <?php
                                                 $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
@@ -38,10 +38,9 @@ $idPaciente = $_GET['pac'];
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Data da Consulta</label>
-                                            <input type='date' class="form-control" id='hasta' value='<?php echo date("Y-m-d"); ?>'>
+                                            <input type='date' class="form-control" name="data" value='<?php echo date("Y-m-d"); ?>'>
                                         </div>
-                                        <div class="fr-view" id="prontuario">
-                                        </div>
+                                        <textarea name="prontuario" id="prontuario"></textarea>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2">
                                                 <button type="submit" name="salvarconsulta" id="salvarconsulta" value="salvarconsulta" class="btn btn-success">Salvar</button>
@@ -50,8 +49,14 @@ $idPaciente = $_GET['pac'];
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    <div class="fr-view" id="prontuario_result">
-                                    </div>
+                                    <?php
+                                    $result_pront = mysqli_query($con,"SELECT * FROM prontuario WHERE idPaciente = $idPaciente");
+                                    while ($prontuarios = mysqli_fetch_array($result_pront)) {
+                                        echo "$prontuarios[dtProntuario] <br>";
+                                        echo "$prontuarios[prontuario]";
+                                    }
+                                    
+                                    ?>
                                 </div>
                             </div>
                             <!-- End Content -->
@@ -72,7 +77,8 @@ $idPaciente = $_GET['pac'];
             videoUpload: false,
             imageUpload: false,
             imageInsertButtons: ['imageByURL'],
-            fileInsertButtons: false
+            fileInsertButtons: false,
+            toolbarInline: false
         });
         var editor = new FroalaEditor('#prontuario_result', {
             language: 'pt_br',
