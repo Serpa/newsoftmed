@@ -248,12 +248,12 @@ if (isset($_SESSION['login'])) {
                         if ($_SESSION['idCargo'] == 3) {
                             echo
                                 '<li class="nav-item">
-                            <a data-toggle="collapse" href="#prontuario">
+                            <a data-toggle="collapse" href="#prontuarios">
                                 <i class="fas fa-users"></i>
                                 <p>Prontuário</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="prontuario">
+                            <div class="collapse" id="prontuarios">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="prontuario.php">

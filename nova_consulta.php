@@ -49,14 +49,19 @@ $idPaciente = $_GET['pac'];
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    <?php
-                                    $result_pront = mysqli_query($con,"SELECT * FROM prontuario WHERE idPaciente = $idPaciente");
-                                    while ($prontuarios = mysqli_fetch_array($result_pront)) {
-                                        echo "$prontuarios[dtProntuario] <br>";
-                                        echo "$prontuarios[prontuario]";
-                                    }
-                                    
-                                    ?>
+                                    <textarea name="prontuario_result" id="prontuario_result">
+                                    <div class="non-editable" contenteditable="false">
+                                <?php
+                                $result_pront = mysqli_query($con, "SELECT * FROM prontuario WHERE idPaciente = $idPaciente");
+                                while ($prontuarios = mysqli_fetch_array($result_pront)) {
+                                    echo "<hr>";
+                                    echo "<p align='center'><strong><font size='3' color='red'>$prontuarios[dtProntuario]</font></strong></p>";
+                                    echo "<hr>";
+                                    echo "$prontuarios[prontuario]";
+                                }
+
+                                ?></div>
+                                </textarea>
                                 </div>
                             </div>
                             <!-- End Content -->
@@ -78,7 +83,8 @@ $idPaciente = $_GET['pac'];
             imageUpload: false,
             imageInsertButtons: ['imageByURL'],
             fileInsertButtons: false,
-            toolbarInline: false
+            toolbarInline: false,
+            placeholderText: 'Digite as informações da consulta...'
         });
         var editor = new FroalaEditor('#prontuario_result', {
             language: 'pt_br',
@@ -86,7 +92,8 @@ $idPaciente = $_GET['pac'];
             videoUpload: false,
             imageUpload: false,
             imageInsertButtons: ['imageByURL'],
-            fileInsertButtons: false
+            fileInsertButtons: false,
+            toolbarInline: false    
         });
     </script>
 
