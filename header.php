@@ -12,7 +12,7 @@ if (isset($_SESSION['login'])) {
     <meta charset="UTF-8" />
     <title>SOFTMED-Software de gestão de Clínicas Médicas</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="img/icon.ico" type="image/x-icon" />
+    <link rel="icon" href="img/logo.ico" type="image/x-icon" />
 
     <!-- Fonts and icons -->
     <script src="js/plugin/webfont/webfont.min.js"></script>
@@ -50,7 +50,7 @@ if (isset($_SESSION['login'])) {
             <div class="logo-header" data-background-color="dark2">
 
                 <a href="index.php" class="logo">
-                    <img src="img/icon.svg" alt="navbar brand" class="navbar-brand">
+                    <img src="img/logo.svg" alt="navbar brand" class="navbar-brand">
                     <font color="white"> <strong>SoftMED</strong></font>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
