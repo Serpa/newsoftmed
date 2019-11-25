@@ -28,7 +28,8 @@ $idPaciente = $_GET['pac'];
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Nome do Paciente</label>
                                             <input type='text' disabled class="form-control" name="data" value=' <?php
-                                                $resultado_cargos = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM paciente WHERE idPaciente  = $idPaciente"));echo $resultado_cargos['nomePaciente']; ?>'>
+                                                                                                                    $resultado_cargos = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM paciente WHERE idPaciente  = $idPaciente"));
+                                                                                                                    echo $resultado_cargos['nomePaciente']; ?>'>
                                         </div>
                                         <input readonly type='hidden' class="form-control" name="pac" value='<?php echo $resultado_cargos['idPaciente']; ?>'>
                                         <div class="form-group">
@@ -47,15 +48,16 @@ $idPaciente = $_GET['pac'];
                                     <textarea name="prontuario_result" id="prontuario_result">
                                     <div class="non-editable" contenteditable="false">
                                 <?php
-                                $result_pront = mysqli_query($con, "SELECT * FROM prontuario WHERE idPaciente = $idPaciente");
-                                while ($prontuarios = mysqli_fetch_array($result_pront)) {
-                                    echo "<hr>";
-                                    echo "<p align='center'><strong><font size='3' color='red'>$prontuarios[dtProntuario]</font></strong></p>";
-                                    echo "<hr>";
-                                    echo "$prontuarios[prontuario]";
-                                }
-
-                                ?></div>
+                                $result_pront = mysqli_query($con, "SELECT * FROM prontuario WHERE idPaciente = $idPaciente ORDER BY idProntuario DESC");
+                                while ($prontuarios = mysqli_fetch_array($result_pront)) { ?>
+                                    <hr>
+                                    <p align='center'><strong><font size='3' color='red'>
+                                        <?php echo date("d/m/Y", strtotime($prontuarios['dtProntuario'])); ?>
+                                    </font></strong></p>
+                                    <hr>
+                                    <?php echo "$prontuarios[prontuario]";
+                                    } ?>
+                                </div>
                                 </textarea>
                                 </div>
                             </div>
@@ -88,7 +90,7 @@ $idPaciente = $_GET['pac'];
             imageUpload: false,
             imageInsertButtons: ['imageByURL'],
             fileInsertButtons: false,
-            toolbarInline: false    
+            toolbarInline: false
         });
     </script>
 

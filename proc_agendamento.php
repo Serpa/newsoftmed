@@ -22,10 +22,10 @@ $insert_event->bindParam(':start', $data_start_conv);
 $insert_event->bindParam(':end', $data_end_conv);
 
 if ($insert_event->execute()) {
-    $retorna = ['sit' => true, 'msg' => '<div class="alert alert-success" role="alert">Evento cadastrado com sucesso!</div>'];
-    $_SESSION['msg'] = '<div class="alert alert-success" role="alert">Evento cadastrado com sucesso!</div>';
+    $retorna = ['sit' => true, 'msg' => '<div class="alert alert-success" role="alert">Consulta marcada com sucesso!</div>'];
+    $_SESSION['msg'] = '<div class="alert alert-success" role="alert">Consulta marcada com sucesso!</div>';
 } else {
-    $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Evento não foi cadastrado com sucesso!</div>'];
+    $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Consulta não foi marcada com sucesso! Tente novamente!</div>'];
 }
 
 

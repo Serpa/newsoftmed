@@ -5,10 +5,6 @@ $idPaciente = $_POST['pac'];
 $data = $_POST['data'];
 $prontuario = $_POST['prontuario'];
 
-echo $idPaciente;
-echo $data;
-echo $prontuario;
-
 $sql = $con->query("SELECT * FROM prontuario WHERE dtProntuario = '$data'");
 
 if (mysqli_num_rows($sql) > 0) {

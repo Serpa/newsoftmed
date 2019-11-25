@@ -67,10 +67,9 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             },
             eventClick: function(info) {
                 info.jsEvent.preventDefault(); // don't let the browser navigate
-                console.log(info);
-                $('#visualizar #med_nome').val(info.getResources);
+                $('#visualizar #med_nome').val(info.event.getResources()[0].title);
                 $('#visualizar #pac_nome').val(info.event.title);
-                //$('#visualizar #medIdE').val(info.resource.id);
+                $('#visualizar #medIdE').val(info.event.getResources()[0].id);
                 $('#visualizar #consultaID').val(info.event.id);
                 $('#visualizar #tipoC').val(info.event.backgroundColor);
                 $('#visualizar #start_c').val(info.event.start.toLocaleString());
@@ -172,7 +171,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Dr(a).</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="med" id="med" disabled>
+                                <input type="text" required class="form-control" name="med" id="med" disabled>
                             </div>
                         </div>
 
@@ -181,7 +180,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Paciente</label>
                             <div class="col-sm-10">
-                                <select name="pac" id="pac" class="form-control" style="width: 100%">
+                                <select name="pac" id="pac" required class="form-control" style="width: 100%">
                                     <option></option>
                                     <?php
                                     $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
@@ -195,7 +194,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Tipo</label>
                             <div class="col-sm-10">
-                                <select name="tipo" class="form-control" id="tipo">
+                                <select name="tipo" required class="form-control" id="tipo">
                                     <option value="">Selecione</option>
                                     <option style="color:#228B22;" value="#228B22">Consulta</option>
                                     <option style="color:#8B0000;" value="#8B0000">Urgência</option>
@@ -206,13 +205,13 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Inicial</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="start" id="start" onkeypress="DataHora(event, this)">
+                                <input type="text" class="form-control" required name="start" id="start" onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Final</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="end" id="end" onkeypress="DataHora(event, this)">
+                                <input type="text" class="form-control" required name="end" id="end" onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -231,7 +230,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detalhes do Evento</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Consulta</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -246,21 +245,21 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                             </div>
                         </div>
 
-                        <input type="text" class="form-control" name="medIdE" id="medIdE" readonly>
+                        <input type="hidden" class="form-control" name="medIdE" id="medIdE" readonly>
 
-                        <input type="text" class="form-control" name="consutaID" id="consultaID" readonly>
+                        <input type="hidden" class="form-control" name="consultaID" id="consultaID" readonly>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Paciente</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="pac_nome" id="pac_nome" readonly>
+                                <input type="text" class="form-control" required name="pac_nome" id="pac_nome" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Tipo</label>
                             <div class="col-sm-10">
-                                <select name="tipo" class="form-control" id="tipoC">
+                                <select name="tipoC" class="form-control" required id="tipoC">
                                     <option value="">Selecione</option>
                                     <option style="color:#228B22;" value="#228B22">Consulta</option>
                                     <option style="color:#8B0000;" value="#8B0000">Urgência</option>
@@ -271,13 +270,13 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Inicial</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="start_c" id="start_c" onkeypress="DataHora(event, this)">
+                                <input type="text" class="form-control" name="start_c" id="start_c" required onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Data Final</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="end_c" id="end_c" onkeypress="DataHora(event, this)">
+                                <input type="text" class="form-control" name="end_c" id="end_c" required onkeypress="DataHora(event, this)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -308,6 +307,27 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             $.ajax({
                 method: "POST",
                 url: "proc_agendamento.php",
+                data: new FormData(this),
+                contentType: false,
+                processData: false,
+                success: function(retorna) {
+                    if (retorna['sit']) {
+                        $("#msg-cad").html(retorna['msg']);
+                        location.reload();
+                    } else {
+                        $("#msg-cad").html(retorna['msg']);
+                    }
+                }
+            })
+        });
+    });
+
+    $(document).ready(function() {
+        $("#editconsulta").on("submit", function(event) {
+            event.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "altera_agendamento.php",
                 data: new FormData(this),
                 contentType: false,
                 processData: false,
