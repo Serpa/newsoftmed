@@ -56,7 +56,7 @@ if (mysqli_num_rows($sql) > 0) {
 		echo 'Message could not be sent.';
 		echo 'Mailer Error: ' . $mail->ErrorInfo;
 	} else {
-		echo "<script>alert('Cadastro realizado com sucesso!');window.location='CadastrarPaciente.php'</script>";
+		echo "<script>alert('Cadastro realizado com sucesso!');window.location='cadastrar_paciente.php'</script>";
 	}
 }
 $con->close();

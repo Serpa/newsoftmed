@@ -5,14 +5,13 @@ $idPaciente = $_POST['pac'];
 $data = $_POST['data'];
 $prontuario = $_POST['prontuario'];
 
-$sql = $con->query("SELECT * FROM prontuario WHERE dtProntuario = '$data'");
+$sql = "INSERT INTO prontuario (idPaciente,dtProntuario,prontuario) 
+VALUES ('$idPaciente','$data','$prontuario')"; 
 
-if (mysqli_num_rows($sql) > 0) {
-	echo "<script>alert('Consulta já realizada no dia de hoje');window.location='./index.php'</script>";
-	exit();
-} else {
-	!$con->query("INSERT INTO prontuario (idPaciente,dtProntuario,prontuario) 
- VALUES ('$idPaciente','$data','$prontuario')");
- echo "<script>alert('Prontuario salvo!');window.location='./index.php'</script>";
-}
-$con->close();
+if($con->query($sql)=== true){
+	echo "<script>alert('Prontuario salvo!');window.location='./index.php'</script>";
+	} else {
+		echo "Erro para inserir: " . $con->error; 
+	}
+	$con->close();
+	?>

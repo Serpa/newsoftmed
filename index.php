@@ -57,11 +57,11 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                     buttonText: '2 dias',
                 }
             },
-            extraParams: function () {
-            return {
-                cachebuster: new Date().valueOf()
-            };
-        },
+            extraParams: function() {
+                return {
+                    cachebuster: new Date().valueOf()
+                };
+            },
             select: function(info) {
                 $('#cadastrar #start').val(info.start.toLocaleString());
                 $('#cadastrar #end').val(info.end.toLocaleString());
@@ -72,8 +72,8 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             eventClick: function(info) {
                 info.jsEvent.preventDefault(); // don't let the browser navigate
                 console.log(info);
-                    window.open("./nova_consulta.php?id="+info.event.id+"&pac="+info.event.extendedProps.idPaciente);
-                    return false;
+                window.open("./nova_consulta.php?id=" + info.event.id + "&pac=" + info.event.extendedProps.idPaciente);
+                return false;
             },
             minTime: '08:00:00',
             maxTime: '18:00:00',
@@ -93,10 +93,12 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         resourceId: '<?php echo $row_events['idMedico']; ?>',
                         id: '<?php echo $row_events['idConsulta']; ?>',
                         idPaciente: '<?php echo $row_events['idPaciente']; ?>',
-						color: '<?php echo $row_events['tipoConsulta']; ?>',
+                        color: '<?php echo $row_events['tipoConsulta']; ?>',
                         title: '<?php echo $row_events['nomePaciente']; ?>',
                         start: '<?php echo $row_events['start']; ?>',
-                        end: '<?php echo $row_events['end']; ?>'
+                        end: '<?php echo $row_events['end']; ?>',
+                        textColor: 'white',
+                        borderColor: 'yellow'
                     },
                 <?php
                 }
@@ -105,7 +107,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             //// uncomment this line to hide the all-day slot
             allDaySlot: false,
 
-			resources: [
+            resources: [
                 <?php
                 while ($row_medicos = mysqli_fetch_array($resultado_medicos)) {
                     ?> {
@@ -122,38 +124,38 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         calendar.setOption('locale', 'pt-br');
     });
 
-//Mascara para o campo data e hora
-function DataHora(evento, objeto) {
-    var keypress = (window.event) ? event.keyCode : evento.which;
-    campo = eval(objeto);
-    if (campo.value == '00/00/0000 00:00:00') {
-        campo.value = "";
-    }
+    //Mascara para o campo data e hora
+    function DataHora(evento, objeto) {
+        var keypress = (window.event) ? event.keyCode : evento.which;
+        campo = eval(objeto);
+        if (campo.value == '00/00/0000 00:00:00') {
+            campo.value = "";
+        }
 
-    caracteres = '0123456789';
-    separacao1 = '/';
-    separacao2 = ' ';
-    separacao3 = ':';
-    conjunto1 = 2;
-    conjunto2 = 5;
-    conjunto3 = 10;
-    conjunto4 = 13;
-    conjunto5 = 16;
-    if ((caracteres.search(String.fromCharCode(keypress)) != -1) && campo.value.length < (19)) {
-        if (campo.value.length == conjunto1)
-            campo.value = campo.value + separacao1;
-        else if (campo.value.length == conjunto2)
-            campo.value = campo.value + separacao1;
-        else if (campo.value.length == conjunto3)
-            campo.value = campo.value + separacao2;
-        else if (campo.value.length == conjunto4)
-            campo.value = campo.value + separacao3;
-        else if (campo.value.length == conjunto5)
-            campo.value = campo.value + separacao3;
-    } else {
-        event.returnValue = false;
+        caracteres = '0123456789';
+        separacao1 = '/';
+        separacao2 = ' ';
+        separacao3 = ':';
+        conjunto1 = 2;
+        conjunto2 = 5;
+        conjunto3 = 10;
+        conjunto4 = 13;
+        conjunto5 = 16;
+        if ((caracteres.search(String.fromCharCode(keypress)) != -1) && campo.value.length < (19)) {
+            if (campo.value.length == conjunto1)
+                campo.value = campo.value + separacao1;
+            else if (campo.value.length == conjunto2)
+                campo.value = campo.value + separacao1;
+            else if (campo.value.length == conjunto3)
+                campo.value = campo.value + separacao2;
+            else if (campo.value.length == conjunto4)
+                campo.value = campo.value + separacao3;
+            else if (campo.value.length == conjunto5)
+                campo.value = campo.value + separacao3;
+        } else {
+            event.returnValue = false;
+        }
     }
-}
 </script>
 
 <div class="main-panel">
@@ -164,11 +166,13 @@ function DataHora(evento, objeto) {
                     <div class="card">
                         <div class="card-header">
                             <!-- Start Content -->
-                            <div class="card-title"><?php if($_SESSION['idCargo']  == 3){
-                        echo 'Consultas do Dia';}?></div>
-						</div>
-						<?php if($_SESSION['idCargo']  == 3){
-                        echo '<div id="calendar" class="has-toolbar"></div>';}?>
+                            <div class="card-title"><?php if ($_SESSION['idCargo']  == 3) {
+                                                        echo 'Consultas do Dia';
+                                                    } ?></div>
+                        </div>
+                        <?php if ($_SESSION['idCargo']  == 3) {
+                            echo '<div id="calendar" class="has-toolbar"></div>';
+                        } ?>
                         <!-- End Content -->
                     </div>
                 </div>
@@ -184,7 +188,7 @@ function DataHora(evento, objeto) {
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                <span id="msg-cad"></span>
+                    <span id="msg-cad"></span>
                     <form class="form-horizontal" form id="addconsulta" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -199,7 +203,7 @@ function DataHora(evento, objeto) {
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Paciente</label>
                             <div class="col-sm-10">
-                                <select name="pac" id="pac" class="form-control" style="width: 100%">
+                                <select name="pac" id="paci" class="form-control" style="width: 100%">
                                     <option></option>
                                     <?php
                                     $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
@@ -248,7 +252,7 @@ function DataHora(evento, objeto) {
 </section>
 </aside>
 <script>
-    $("#pac").select2({
+    $("#paci").select2({
         placeholder: "Selecione um Paciente",
         allowClear: true,
         theme: "bootstrap"

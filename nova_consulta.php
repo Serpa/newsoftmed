@@ -5,6 +5,12 @@ $idConsulta = $_GET['id'];
 $idPaciente = $_GET['pac'];
 ?>
 
+<style>
+    #logo {
+        display: none;
+    }
+</style>
+
 <link href="./froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="./froala-editor/js/froala_editor.pkgd.min.js"></script>
 
@@ -27,7 +33,7 @@ $idPaciente = $_GET['pac'];
                                     <form name="consulta" action="salvar_consulta.php" method="post">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Nome do Paciente</label>
-                                            <input type='text' disabled class="form-control" name="data" value=' <?php
+                                            <input type='text' disabled class="form-control" name="nome" value=' <?php
                                                                                                                     $resultado_cargos = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM paciente WHERE idPaciente  = $idPaciente"));
                                                                                                                     echo $resultado_cargos['nomePaciente']; ?>'>
                                         </div>

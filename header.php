@@ -34,6 +34,12 @@ if (isset($_SESSION['login'])) {
     <!-- CSS Files -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/atlantis.min.css">
+    <link rel="stylesheet" href="css/select2.min.css" />
+    <link rel="stylesheet" href="css/select2-bootstrap.min.css" />
+
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="js/select2.min.js"></script>
 
 </head>
 
@@ -44,7 +50,8 @@ if (isset($_SESSION['login'])) {
             <div class="logo-header" data-background-color="dark2">
 
                 <a href="index.php" class="logo">
-                    <img src="img/icon.svg" alt="navbar brand" class="navbar-brand"><font color="white"> <strong>SoftMED</strong></font>
+                    <img src="img/icon.svg" alt="navbar brand" class="navbar-brand">
+                    <font color="white"> <strong>SoftMED</strong></font>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
@@ -256,7 +263,7 @@ if (isset($_SESSION['login'])) {
                             <div class="collapse" id="prontuarios">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="prontuario.php">
+                                        <a data-toggle="modal" data-target="#procurar_prontuario">
                                             <span class="sub-item">Procurar</span>
                                         </a>
                                     </li>                          
@@ -306,6 +313,43 @@ if (isset($_SESSION['login'])) {
             </div>
         </div>
         <!-- modal -->
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="procurar_prontuario" role="dialog" tabindex="-1" id="procurar_prontuario" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Procurar prontuário</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form action="./prontuario.php" method="get">
+                        <div class="modal-body">
+                            <p>Selecione um paciente</p>
+                            <select name="pacID" id="pacID" required class="form-control" style="width: 100%">
+                                <option></option>
+                                <?php
+                                $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
+                                while ($row_cargos = mysqli_fetch_assoc($resultado_cargos)) { ?>
+                                    <option value="<?php echo $row_cargos['idPaciente']; ?>"><?php echo $row_cargos['nomePaciente']; ?></option>
+                                <?php } ?> } ?>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                            <button class="btn btn-theme" type="submit" type="button">Pesquisar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+        <script>
+    $("#pacID").select2({
+        placeholder: "Selecione um Paciente",
+        allowClear: true,
+        theme: "bootstrap"
+    });
+</script>
         <script>
             var password = document.getElementById("nova_senha"),
                 confirm_password = document.getElementById("confirma_senha");

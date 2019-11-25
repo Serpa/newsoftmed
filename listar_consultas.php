@@ -13,14 +13,18 @@ while($row_events = mysqli_fetch_array($resultado_events)){
     $title = $row_events['nomePaciente'];
     $start = $row_events['start'];
     $end = $row_events['end'];
-    
+    $textColor = 'white';
+    $borderColor = 'yellow';
+
     $eventos[] = [
         'id' => $id,
         'resourceId' => $resourceId, 
         'title' => $title, 
         'color' => $color, 
         'start' => $start, 
-        'end' => $end, 
+        'end' => $end,
+        'textColor' => $textColor,
+        'borderColor' => $borderColor, 
         ];
 }
 

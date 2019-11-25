@@ -33,11 +33,4 @@ echo "<script>alert('Cadastro alterado com sucesso!');window.location='consultar
 	echo "Erro para inserir: " . $con->error; 
 }
 $con->close();
-	
-
-
-
-
-
-
 ?>

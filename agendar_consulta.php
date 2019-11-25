@@ -13,12 +13,15 @@ $result_medicos = "SELECT idFuncionario,nomeFuncionario,idCargo FROM funcionario
 $resultado_medicos = mysqli_query($con, $result_medicos);
 ?>
 
+<style>
+.fc-title {
+  font-weight: bold;
+}
+</style>
 <link href='fullcalendar/core/main.css' rel='stylesheet' />
 <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
 <link href='fullcalendar/timegrid/main.css' rel='stylesheet' />
 <link href='fullcalendar/bootstrap/main.css' rel='stylesheet' />
-<link rel="stylesheet" href="css/select2.min.css" />
-<link rel="stylesheet" href="css/select2-bootstrap.min.css" />
 
 <script src='fullcalendar/core/main.js'></script>
 <script src='fullcalendar/interaction/main.js'></script>
@@ -30,8 +33,6 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
 <script src='fullcalendar/bootstrap/main.js'></script>
 <script src='fullcalendar/moment/main.js'></script>
 <script src='fullcalendar/core/locales/pt-br.js'></script>
-<script src="jquery/jquery.min.js"></script>
-<script src="js/select2.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -97,8 +98,10 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             events: 'listar_consultas.php',
             //// uncomment this line to hide the all-day slot
             allDaySlot: false,
-
             resources: 'listar_medicos.php',
+            eventRender: function (event, element, view) {
+                    $(element).css("font-weight", "bold");
+            }
         });
 
         calendar.render();
