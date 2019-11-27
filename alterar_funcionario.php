@@ -18,7 +18,7 @@ $cep = $_POST["cep"];
 $tel = $_POST["telefone"];
 $cel = $_POST["celular"];
 $email = $_POST["email"];
-$idcargo = $_POST["cargos"];
+$idCargo = $_POST["cargos"];
 
 
 $sql = "UPDATE  funcionario SET nomeFuncionario = '$nome', rg = '$rg', cpf = '$cpf', dtNascimento = '$dtNascimento', 
@@ -28,7 +28,7 @@ bairro = '$bairro', cidade = '$cidade', estado = '$estado', cep = '$cep' , telef
 
 
 if($con->query($sql)=== true){
-echo "<script>alert('Cadastro alterado com sucesso!');window.location='consultar_funcionario.php'</script>";
+echo "<script>alert('Cadastro alterado com sucesso!');window.location='index.php'</script>";
 } else {
 	echo "Erro para inserir: " . $con->error; 
 }

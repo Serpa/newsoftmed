@@ -14,11 +14,13 @@ $result_profile = mysqli_fetch_array($profile);
               <!-- Start Content -->
               <div class="card-title">Meu Perfil</div>
             </div>
-            <form class="form-horizontal style-form" action="envio_funcionarios.php" method="post">
+            <form class="form-horizontal style-form" action="alterar_funcionario.php" method="post">
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Nome</label>
-                  <input type="text" class="form-control" name="nome" required="required" value="<?php echo $result_profile['nomeFuncionario'];?>">
+                  <input type="text" class="form-control" name="nomeFuncionario" required="required" value="<?php echo $result_profile['nomeFuncionario'];?>">
               </div>
+
+              <input type="text" hidden readonly class="form-control" name="idFuncionario" required="required" value="<?php echo $result_profile['idFuncionario'];?>">
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">RG</label>
@@ -32,14 +34,16 @@ $result_profile = mysqli_fetch_array($profile);
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Data de Nascimento</label>
-                  <input type="date" class="form-control" name="dtnascimento" required="required" value="<?php echo $result_profile['dtNascimento'];?>">
+                  <input type="date" class="form-control" name="dtNascimento" required="required" value="<?php echo $result_profile['dtNascimento'];?>">
               </div>
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Data de Admissão</label>
-                  <input type="date" value="<?php echo date('Y-m-d'); ?>" class="form-control" name="dtadmissao" required="required" value="<?php echo $result_profile['dtNascimento'];?>">
+                  <input type="date" class="form-control" readonly name="dtAdmissao" required="required" value="<?php echo $result_profile['dtAdmissao'];?>">
               </div>
-
+              
+              <input type="date" hidden readonly class="form-control" name="dtDesligamento" value="">
+              
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">E-Mail</label>
                   <input type="mail" class="form-control" name="email" required="required" value="<?php echo $result_profile['email'];?>">
@@ -47,13 +51,13 @@ $result_profile = mysqli_fetch_array($profile);
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Telefone</label>
-                  <input type="tel" class="form-control" name="tel" required="required" onkeyup="mascara('(##)####-####',this,event,true)" value="<?php echo $result_profile['telefone'];?>">
+                  <input type="tel" class="form-control" name="telefone" required="required" onkeyup="mascara('(##)####-####',this,event,true)" value="<?php echo $result_profile['telefone'];?>">
               </div>
 
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Celular</label>
-                  <input type="tel" class="form-control" name="cel" required="required" onkeyup="mascara('(##)#####-####',this,event,true)" value="<?php echo $result_profile['celular'];?>">
+                  <input type="tel" class="form-control" name="celular" required="required" onkeyup="mascara('(##)#####-####',this,event,true)" value="<?php echo $result_profile['celular'];?>">
               </div>
 
               <div class="form-group">
@@ -68,7 +72,7 @@ $result_profile = mysqli_fetch_array($profile);
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Número</label>
-                  <input type="text" class="form-control" id="num" name="num" required="required" value="<?php echo $result_profile['numero'];?>">
+                  <input type="text" class="form-control" id="num" name="numero" required="required" value="<?php echo $result_profile['numero'];?>">
               </div>
 
               <div class="form-group">
@@ -122,7 +126,7 @@ $result_profile = mysqli_fetch_array($profile);
 
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">Cargo</label>
-                  <select class="form-control" name="cargos" disabled>
+                  <select class="form-control" name="cargos" readonly>
                     <option value="">Selecione o Cargo</option>
                     <?php
                     $resultado_cargos = mysqli_query($con, "SELECT * FROM cargo");
@@ -132,7 +136,7 @@ $result_profile = mysqli_fetch_array($profile);
                   </select>
                 </div>
               <div class="card-action">
-                <button type="submit" class="btn btn-danger" onClick="window.location.href='Index.php'">Cancelar</button>
+                <button type="submit" class="btn btn-danger" onClick="window.location.href='index.php'">Cancelar</button>
 
                 <button type="submit" class="btn btn-theme">Salvar</button>
               </div>

@@ -23,7 +23,7 @@ $idReg = uniqid(rand(), true);
 $sql = $con->query("SELECT * FROM funcionario WHERE nomeFuncionario='$nome'");
 
 if(mysqli_num_rows($sql) > 0){
-	echo "<script>alert('Funcionário já cadastrado! Cadastre um novo funcionário');window.location='CadastrarFuncionario.php'</script>";
+	echo "<script>alert('Funcionário já cadastrado! Cadastre um novo funcionário');window.location='consultar_funcionario.php'</script>";
 exit();
 } else {
  !$con->query("INSERT INTO funcionario (nomeFuncionario,rg,cpf,dtNascimento,dtAdmissao,rua,numero,bairro,cidade,estado,cep,telefone,celular,email,idCargo,idReg) 
@@ -52,7 +52,7 @@ exit();
 	 echo 'Message could not be sent.';
 	 echo 'Mailer Error: ' . $mail->ErrorInfo;
  } else {
-	echo "<script>alert('Cadastro realizado com sucesso!');window.location='CadastrarFuncionario.php'</script>";
+	echo "<script>alert('Cadastro realizado com sucesso!');window.location='consultar_funcionario.php'</script>";
  }
 }
 $con->close();

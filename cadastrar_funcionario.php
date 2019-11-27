@@ -127,7 +127,7 @@ if ($_SESSION['idCargo']  != 1) {
                     <?php
                     $resultado_cargos = mysqli_query($con, "SELECT * FROM cargo");
                     while ($row_cargos = mysqli_fetch_assoc($resultado_cargos)) { ?>
-                      <option value="<?php echo utf8_encode($row_cargos['idCargo']); ?>"><?php echo $row_cargos['descricao']; ?></option>
+                      <option value="<?php echo $row_cargos['idCargo']; ?>"><?php echo $row_cargos['descricao']; ?></option>
                     <?php } ?> } ?>
                   </select>
                 </div>

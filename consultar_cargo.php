@@ -42,7 +42,7 @@ $resultado_consultaCargo = mysqli_query($con, $result_consultaCargo);
  <td><?php echo $rows_consultaCargo['descricao']; ?></td>
 
  <td>
-          <?php echo "<a class='btn btn-primary' href='consultar_cargo.php?id=".$rows_consultaCargo['idCargo'] ."' data-toggle='modal' data-target='#ModalAlterar".$rows_consultaCargo['idCargo']."'>" ?>Alterar<?php echo "</a>"; ?>
+          <?php echo "<a class='btn btn-default' href='consultar_cargo.php?id=".$rows_consultaCargo['idCargo'] ."' data-toggle='modal' data-target='#ModalAlterar".$rows_consultaCargo['idCargo']."'>" ?>Alterar<?php echo "</a>"; ?>
 
      
     <!-- Modal-->

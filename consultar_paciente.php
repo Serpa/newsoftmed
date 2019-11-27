@@ -53,8 +53,8 @@ $resultado_consultaPaciente = mysqli_query($con, $result_consultaPaciente);
 												<td><?php echo $rows_consultaPaciente['email']; ?></td>
 
 												<td>
-													<?php echo "<a class='btn btn-primary' href='consultar_cargo.php?id=" . $rows_consultaPaciente['idPaciente'] . "' data-toggle='modal' data-target='#ModalAlterar" . $rows_consultaPaciente['idPaciente'] . "'>" ?>Alterar<?php echo "</a>"; ?>
-													<?php echo "<a class='btn btn-primary' href='consultar_cargo.php?id=" . $rows_consultaPaciente['idPaciente'] . "' data-toggle='modal' data-target='#ModalMaisInfo" . $rows_consultaPaciente['idPaciente'] . "'>" ?><i class="fas fa-plus-square"></i><?php echo "</a>"; ?>
+													<?php echo "<a class='btn btn-default' href='consultar_cargo.php?id=" . $rows_consultaPaciente['idPaciente'] . "' data-toggle='modal' data-target='#ModalAlterar" . $rows_consultaPaciente['idPaciente'] . "'>" ?>Alterar<?php echo "</a>"; ?>
+													<?php echo "<a class='btn btn-default' href='consultar_cargo.php?id=" . $rows_consultaPaciente['idPaciente'] . "' data-toggle='modal' data-target='#ModalMaisInfo" . $rows_consultaPaciente['idPaciente'] . "'>" ?><i class="fas fa-plus-square"></i><?php echo "</a>"; ?>
 
 
 													<!-- Modal-->
