@@ -10,7 +10,7 @@ $profileimg= "./img/profile/profileADM.jpg";
 }if($_SESSION['idCargo'] == 2){
 $profileimg= "./img/profile/profileSEC.jpg";
 }if($_SESSION['idCargo'] == 3){
-$profileimg= "./img/profile/profileMED.png";
+$profileimg= "./img/profile/profileMED.jpeg";
 }
 ?>
 <!DOCTYPE html>
