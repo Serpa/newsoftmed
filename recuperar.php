@@ -14,9 +14,9 @@ exit();
     $result_lost = mysqli_fetch_array($sql);
     $id_func = $result_lost['idFuncionario'];
     $nome = $result_lost['nomeFuncionario'];
-    echo $id_func;
+
  !$con->query("UPDATE usuario SET lostPass = '$lostPass'  WHERE idFuncionario = $id_func");
-} $mail = new PHPMailer;
+ $mail = new PHPMailer;
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
 $mail->CharSet = 'UTF-8';
@@ -42,5 +42,6 @@ if(!$mail->send()) {
    echo "<script>alert('E-mail enviado com sucesso!');window.location='./login.php'</script>";
 }
 $con->close();
+} 
 
 ?>
