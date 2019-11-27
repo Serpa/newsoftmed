@@ -170,7 +170,7 @@ if ($_SESSION['idCargo']  != 3 && $_SESSION['idCargo'] != 2) {
                                 </div>
                             </div>
                             <div class="card-action">
-                                <button type="submit" class="btn btn-danger" onClick="window.location.href='Index.php'">Cancelar</button>
+                                <button type="submit" class="btn btn-danger" onClick="window.location.href='index.php'">Cancelar</button>
 
                                 <button type="submit" class="btn btn-theme">Cadastrar</button>
                             </div>

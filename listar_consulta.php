@@ -6,7 +6,12 @@ if ($_SESSION['idCargo']  != 3 && $_SESSION['idCargo'] != 2) {
 }
 
 mysqli_query($con, "SET NAMES utf8");
-$result_events = "SELECT idMedico,idConsulta,consulta.idPaciente,consulta.tipoConsulta,paciente.nomePaciente,paciente.idPaciente, start, end FROM consulta,paciente WHERE consulta.idPaciente = paciente.idPaciente AND consulta.idMedico = $_SESSION[idFuncionario] ";
+if ($_SESSION['idCargo']  == 3) {
+    $result_events = "SELECT idMedico,idConsulta,consulta.idPaciente,consulta.tipoConsulta,paciente.nomePaciente,paciente.idPaciente, start, end FROM consulta,paciente WHERE consulta.idPaciente = paciente.idPaciente AND consulta.idMedico = $_SESSION[idFuncionario] ";
+} else {
+    $result_events = "SELECT idMedico,idConsulta,consulta.idPaciente,consulta.tipoConsulta,paciente.nomePaciente,paciente.idPaciente, start, end FROM consulta,paciente WHERE consulta.idPaciente = paciente.idPaciente";
+}
+
 $resultado_events = mysqli_query($con, $result_events);
 
 $result_medicos = "SELECT idFuncionario,nomeFuncionario,idCargo FROM funcionario WHERE idFuncionario = $_SESSION[idFuncionario]";
@@ -41,7 +46,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['list','interaction'],
+            plugins: ['list', 'interaction'],
             defaultView: 'listWeek',
             selectable: true,
             // customize the button names,
@@ -63,6 +68,10 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                 center: '',
                 right: 'listDay,listWeek,listMonth'
             },
+            eventRender: function(event, element, view) {
+                console.log(event);
+                $(element).find(".fc-list-item-title").append("<div>" + event.resourceId + "</div>");
+            },
             events: [
                 <?php
                 while ($row_events = mysqli_fetch_array($resultado_events)) {
@@ -73,9 +82,7 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
                         color: '<?php echo $row_events['tipoConsulta']; ?>',
                         title: '<?php echo $row_events['nomePaciente']; ?>',
                         start: '<?php echo $row_events['start']; ?>',
-                        end: '<?php echo $row_events['end']; ?>',
-                        textColor: 'white',
-                        borderColor: 'yellow'
+                        end: '<?php echo $row_events['end']; ?>'
                     },
                 <?php
                 }
@@ -105,8 +112,8 @@ $resultado_medicos = mysqli_query($con, $result_medicos);
             </div>
         </div>
     </div>
-</section>
-</aside>
-<?php
-include_once "footer.php";
-?>
+    </section>
+    </aside>
+    <?php
+    include_once "footer.php";
+    ?>

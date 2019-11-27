@@ -4,7 +4,15 @@ if (isset($_SESSION['login'])) {
     //login ok!
 } else {
     header('location: ./login.php');
-} ?>
+}
+if ($_SESSION['idCargo'] == 1){
+$profileimg= "./img/profile/profileADM.jpg";
+}if($_SESSION['idCargo'] == 2){
+$profileimg= "./img/profile/profileSEC.jpg";
+}if($_SESSION['idCargo'] == 3){
+$profileimg= "./img/profile/profileMED.png";
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -80,17 +88,17 @@ if (isset($_SESSION['login'])) {
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                    <img src="<?php echo $profileimg;?>" alt="..." class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                            <div class="avatar-lg"><img src="<?php echo $profileimg;?>" alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $_SESSION['nomeFuncionario']; ?></h4>
-                                                <p class="text-muted"><?php echo $_SESSION['email']; ?></p><a href="./profile.php" class="btn btn-xs btn-secondary btn-sm">Ver Profile</a>
+                                                <p class="text-muted"><?php echo $_SESSION['email']; ?>
                                             </div>
                                         </div>
                                     </li>
@@ -116,32 +124,16 @@ if (isset($_SESSION['login'])) {
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="<?php echo $profileimg;?>" alt="..." class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <a data-toggle="collapse" aria-expanded="true">
                                 <span>
                                     <?php echo $_SESSION['nomeFuncionario']; ?>
                                     <span class="user-level"><?php echo $_SESSION['descricao']; ?></span>
-                                    <span class="caret"></span>
                                 </span>
                             </a>
                             <div class="clearfix"></div>
-
-                            <div class="collapse in" id="collapseExample">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#profile">
-                                            <span class="link-collapse">Meu Perfil</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#edit">
-                                            <span class="link-collapse">Editar Perfil</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <ul class="nav nav-primary">
@@ -209,7 +201,7 @@ if (isset($_SESSION['login'])) {
                         if ($_SESSION['idCargo'] == 2 || $_SESSION['idCargo'] == 3) {
                             echo '<li class="nav-item">
                             <a data-toggle="collapse" href="#pacientes">
-                                <i class="fas fa-users"></i>
+                            <i class="fas fa-procedures"></i>
                                 <p>Pacientes</p>
                                 <span class="caret"></span>
                             </a>
@@ -230,7 +222,7 @@ if (isset($_SESSION['login'])) {
                         </li>
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#consultas">
-                                <i class="fas fa-users"></i>
+                            <i class="fas fa-calendar-check"></i>
                                 <p>Consultas</p>
                                 <span class="caret"></span>
                             </a>
@@ -256,7 +248,7 @@ if (isset($_SESSION['login'])) {
                             echo
                                 '<li class="nav-item">
                             <a data-toggle="collapse" href="#prontuarios">
-                                <i class="fas fa-users"></i>
+                            <i class="fas fa-notes-medical"></i>
                                 <p>Prontuário</p>
                                 <span class="caret"></span>
                             </a>
@@ -328,9 +320,9 @@ if (isset($_SESSION['login'])) {
                             <select name="pacID" id="pacID" required class="form-control" style="width: 100%">
                                 <option></option>
                                 <?php
-                                $resultado_cargos = mysqli_query($con, "SELECT * FROM paciente");
-                                while ($row_cargos = mysqli_fetch_assoc($resultado_cargos)) { ?>
-                                    <option value="<?php echo $row_cargos['idPaciente']; ?>"><?php echo $row_cargos['nomePaciente']; ?></option>
+                                $resultado_pront = mysqli_query($con, "SELECT * FROM paciente");
+                                while ($row_pront = mysqli_fetch_array($resultado_pront)) { ?>
+                                    <option value="<?php echo $row_pront['idPaciente']; ?>"><?php echo $row_pront['nomePaciente']; ?></option>
                                 <?php } ?> } ?>
                             </select>
                         </div>
@@ -344,12 +336,12 @@ if (isset($_SESSION['login'])) {
         </div>
         <!-- modal -->
         <script>
-    $("#pacID").select2({
-        placeholder: "Selecione um Paciente",
-        allowClear: true,
-        theme: "bootstrap"
-    });
-</script>
+            $("#pacID").select2({
+                placeholder: "Selecione um Paciente",
+                allowClear: true,
+                theme: "bootstrap"
+            });
+        </script>
         <script>
             var password = document.getElementById("nova_senha"),
                 confirm_password = document.getElementById("confirma_senha");

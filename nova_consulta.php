@@ -42,7 +42,10 @@ $idPaciente = $_GET['pac'];
                                             <label for="exampleFormControlSelect1">Data da Consulta</label>
                                             <input type='date' class="form-control" name="data" value='<?php echo date("Y-m-d"); ?>'>
                                         </div>
-                                        <textarea name="prontuario" id="prontuario"></textarea>
+                                        <div class="form-group">
+                                        <label for="exampleFormControlInput1">Prontuário</label>
+                                            <textarea name="prontuario" id="prontuario"></textarea>
+                                        </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2">
                                                 <button type="submit" name="salvarconsulta" id="salvarconsulta" value="salvarconsulta" class="btn btn-success">Salvar</button>

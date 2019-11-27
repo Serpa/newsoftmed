@@ -69,10 +69,13 @@ $resultado_consultaPaciente = mysqli_query($con, $result_consultaPaciente);
 																	</button>
 																</div>
 																<div class="modal-body">
-																	<form action="AlterarCargo.php" method="POST">
+																	<form action="alterar_paciente.php" method="POST">
 
 																		<label>Nome</label>
 																		<input type="text" class="form-control" name="nomePaciente" value="<?php echo $rows_consultaPaciente['nomePaciente']; ?>">
+
+																		<label>ID</label>
+																		<input type="hidden" readonly class="form-control" name="idPaciente" value="<?php echo $rows_consultaPaciente['idPaciente']; ?>">
 
 																		<label>RG</label>
 																		<input type="text" class="form-control" name="rg" value="<?php echo $rows_consultaPaciente['rg']; ?>">
@@ -186,7 +189,7 @@ $resultado_consultaPaciente = mysqli_query($con, $result_consultaPaciente);
 																<div class="modal-body">
 																	<form>
 																		<label>Nome</label>
-																		<input type="text" disabled class="form-control" name="nomePaciente" value="<?php echo $rows_consultaPaciente['nomePaciente']; ?>">
+																		<input type="text" disabled class="form-control" name="nomePaciente" value="<?php echo $rows_consultaPaciente['nomePaciente']; ?>">															
 
 																		<label>RG</label>
 																		<input type="text" disabled class="form-control" name="rg" value="<?php echo $rows_consultaPaciente['rg']; ?>">
@@ -273,6 +276,30 @@ $resultado_consultaPaciente = mysqli_query($con, $result_consultaPaciente);
 	?>
 	<script>
 		$(document).ready(function() {
-			$('#basic-datatables').DataTable({});
+			$('#basic-datatables').DataTable({
+				"language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+				}
+			});
 		});
 	</script>
